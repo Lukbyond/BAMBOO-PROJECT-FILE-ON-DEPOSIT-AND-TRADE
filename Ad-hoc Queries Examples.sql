@@ -24,9 +24,14 @@ GROUP by inserted_at
 
 -- Count all users who had 2 or more deposits before 2021 but have not deposited in 2021
 
-SELECT user_id, id
+SELECT user_id
 FROM deposits 
 where date(inserted_at) < "2020-12-31"
-group by id
+group by user_id
+having count(*)>1
+in
+(SELECT user_id
+FROM deposits 
+where date(inserted_at) > "2020-12-31")
 
 
